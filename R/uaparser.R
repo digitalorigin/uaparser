@@ -8,24 +8,24 @@
 get_empty_list <- function (x) {
   list(
     device=list(
-      brand=NULL,
-      model=NULL,
-      family=NULL
+      brand=NA,
+      model=NA,
+      family=NA
       ),
     os=list(
-      major=NULL,
-      patch_minor=NULL,
-      minor=NULL,
-      family=NULL,
-      patch=NULL
+      major=NA,
+      patch_minor=NA,
+      minor=NA,
+      family=NA,
+      patch=NA
       ),
     user_agent=list(
-      major=NULL,
-      minor=NULL,
-      family=NULL,
-      patch=NULL
+      major=NA,
+      minor=NA,
+      family=NA,
+      patch=NA
       ),
-    string=x
+    string=NA
   )
 }
 
@@ -44,6 +44,7 @@ parse_user_agent <- function (
         output = append(output, list(jsonlite::fromJSON(output_string)))
       }
     }
+    output = lapply(output, function(x) lapply(x, function(x) lapply(x, function(x) ifelse(is.null(x), NA, x))))
   } else {
     if (is.na(r_string)) {
       output = get_empty_list(r_string)
@@ -51,6 +52,7 @@ parse_user_agent <- function (
       output_string = python.call("parse_user_agent", str_user_agent)
       output = jsonlite::fromJSON(output_string)
     }
+    output = lapply(output, function(x) lapply(x, function(x) ifelse(is.null(x), NA, x)))
   }
   return (output)
 }
