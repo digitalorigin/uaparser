@@ -8,9 +8,17 @@
 #' @title parse_user_agent
 #' @export
 parse_user_agent <- function (
-  r_string
+  str_user_agent
 ) {
-  output_string = python.call("parse_user_agent", r_string)
-  message(output_string)
-  return (jsonlite::fromJSON(output_string))
+  if (length(str_user_agent)>1) {
+    output = list()
+    for (r_string in str_user_agent) {
+      output_string = python.call("parse_user_agent", r_string)
+      output = append(output, list(jsonlite::fromJSON(output_string)))
+    }
+  } else {
+    output_string = python.call("parse_user_agent", str_user_agent)
+    output = jsonlite::fromJSON(output_string)
+  }
+  return (output)
 }

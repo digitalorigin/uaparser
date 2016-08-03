@@ -4,6 +4,6 @@
 \alias{parse_user_agent}
 \title{parse_user_agent}
 \usage{
-parse_user_agent(r_string)
+parse_user_agent(str_user_agent)
 }
 
