@@ -5,6 +5,30 @@
   python.load(paste0(libname, "/", pkgname, "/python_lib/ua_parser.py"))
 }
 
+get_empty_list <- function (x) {
+  list(
+    device=list(
+      brand=NULL,
+      model=NULL,
+      family=NULL
+      ),
+    os=list(
+      major=NULL,
+      patch_minor=NULL,
+      minor=NULL,
+      family=NULL,
+      patch=NULL
+      ),
+    user_agent=list(
+      major=NULL,
+      minor=NULL,
+      family=NULL,
+      patch=NULL
+      ),
+    string=s
+  )
+}
+
 #' @title parse_user_agent
 #' @export
 parse_user_agent <- function (
@@ -14,7 +38,7 @@ parse_user_agent <- function (
     output = list()
     for (r_string in str_user_agent) {
       if (is.na(r_string)) {
-        output = append(output, list(NA))
+        output = append(output, list(get_empty_list(r_string)))
       } else {
         output_string = python.call("parse_user_agent", r_string)
         output = append(output, list(jsonlite::fromJSON(output_string)))
@@ -22,7 +46,7 @@ parse_user_agent <- function (
     }
   } else {
     if (is.na(r_string)) {
-      output = NA
+      output = get_empty_list(r_string)
     } else {
       output_string = python.call("parse_user_agent", str_user_agent)
       output = jsonlite::fromJSON(output_string)
