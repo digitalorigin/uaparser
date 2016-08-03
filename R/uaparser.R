@@ -25,7 +25,7 @@ get_empty_list <- function (x) {
       family=NULL,
       patch=NULL
       ),
-    string=s
+    string=x
   )
 }
 
