@@ -13,12 +13,20 @@ parse_user_agent <- function (
   if (length(str_user_agent)>1) {
     output = list()
     for (r_string in str_user_agent) {
-      output_string = python.call("parse_user_agent", r_string)
-      output = append(output, list(jsonlite::fromJSON(output_string)))
+      if (is.na(r_string)) {
+        output = append(output, list(NA))
+      } else {
+        output_string = python.call("parse_user_agent", r_string)
+        output = append(output, list(jsonlite::fromJSON(output_string)))
+      }
     }
   } else {
-    output_string = python.call("parse_user_agent", str_user_agent)
-    output = jsonlite::fromJSON(output_string)
+    if (is.na(r_string)) {
+      output = NA
+    } else {
+      output_string = python.call("parse_user_agent", str_user_agent)
+      output = jsonlite::fromJSON(output_string)
+    }
   }
   return (output)
 }
