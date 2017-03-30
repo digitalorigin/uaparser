@@ -1,8 +1,13 @@
 # roxygen2::roxygenise()
 
+.py_ua_parser <- NULL
+
 .onLoad <- function(libname, pkgname) {
-  library(rPython)
-  python.load(paste0(libname, "/", pkgname, "/python_lib/ua_parser.py"))
+  # library(rPython)
+  # python.load(paste0(libname, "/", pkgname, "/python_lib/ua_parser.py"))
+  
+  .py_ua_parser <<- reticulate::py_run_file(paste0(libname, "/", pkgname, "/python_lib/ua_parser.py"))
+  # .py_ua_parser <<- reticulate::py_run_file(paste0(.libPaths()[1], "/uaparser/python_lib/ua_parser.py"))
 }
 
 get_empty_list <- function (x) {
@@ -40,7 +45,8 @@ parse_user_agent <- function (
       if (is.na(r_string)) {
         output = append(output, list(get_empty_list(r_string)))
       } else {
-        output_string = python.call("parse_user_agent", r_string)
+        # output_string = python.call("parse_user_agent", r_string)
+        output_string = .py_ua_parser$parse_user_agent(r_string)
         output = append(output, list(jsonlite::fromJSON(output_string)))
       }
     }
@@ -49,7 +55,8 @@ parse_user_agent <- function (
     if (is.na(r_string)) {
       output = get_empty_list(r_string)
     } else {
-      output_string = python.call("parse_user_agent", str_user_agent)
+      # output_string = python.call("parse_user_agent", str_user_agent)
+      output_string = .py_ua_parser$parse_user_agent(str_user_agent)
       output = jsonlite::fromJSON(output_string)
     }
     output = lapply(output, function(x) lapply(x, function(x) ifelse(is.null(x), NA, x)))
