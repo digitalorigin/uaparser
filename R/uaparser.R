@@ -52,6 +52,7 @@ parse_user_agent <- function (
     }
     output = lapply(output, function(x) lapply(x, function(x) lapply(x, function(x) ifelse(is.null(x), NA, x))))
   } else {
+    r_string = str_user_agent
     if (is.na(r_string)) {
       output = get_empty_list(r_string)
     } else {
