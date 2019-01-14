@@ -7,4 +7,5 @@ Author: Roc Alabern (for original fork authors are Oliver Keyes and Alex Suhan)
 Maintainer: Roc Alabern <roc.alabern@gmail.com>
 Description: Actually this is a port of python parser to avoid windows
     installation problems. No code from fork remains.
+Depends: reticulate, jsonlite
 RoxygenNote: 5.0.1
