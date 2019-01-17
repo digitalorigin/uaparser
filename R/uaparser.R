@@ -4,8 +4,9 @@
 
 .onLoad <- function(libname, pkgname) {
   # library(rPython)
-  # python.load(paste0(libname, "/", pkgname, "/python_lib/ua_parser.py"))
-  
+  # rPython::python.load(paste0(libname, "/", pkgname, "/python_lib/ua_parser.py"))
+
+  # if this fails try installing the uaparser python package first with: python -m pip install ua_parser
   .py_ua_parser <<- reticulate::py_run_file(paste0(libname, "/", pkgname, "/python_lib/ua_parser.py"))
   # .py_ua_parser <<- reticulate::py_run_file(paste0(.libPaths()[1], "/uaparser/python_lib/ua_parser.py"))
 }
