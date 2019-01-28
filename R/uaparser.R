@@ -47,7 +47,7 @@ parse_user_agent <- function (
         output = append(output, list(get_empty_list(r_string)))
       } else {
         # output_string = python.call("parse_user_agent", r_string)
-        output_string = .py_ua_parser$parse_user_agent(r_string)
+        output_string = .py_ua_parser$parse_user_agent(iconv(r_string, to='ASCII//TRANSLIT'))
         output = append(output, list(jsonlite::fromJSON(output_string)))
       }
     }
